@@ -9,13 +9,14 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("BlogLy"),
+        title: Text("BlogLy", style: TextStyle(color: Colors.lightBlueAccent),),
         elevation: 0.2,
       ),
       drawer: Drawer(
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
+              decoration: BoxDecoration(color: Colors.lightBlueAccent),
               accountName: Text("Yusuf Shihata"),
               accountEmail: Text("yusufshihata2006@gmail.com"),
               currentAccountPicture: GestureDetector(
@@ -46,28 +47,28 @@ class HomeScreen extends StatelessWidget {
         child: CardList(
           blogs: [
             Blog(
-              imageUrl: 'https://via.placeholder.com/400x200',
+              imageUrl: 'https://picsum.photos/250?image=9',
               title: 'Flutter Blog UI',
               subtitle: 'How to create awesome designs',
               description: 'Learn the steps to create responsive and attractive UIs in Flutter.',
               content: "This is the content for Flutter blog",
             ),
             Blog(
-              imageUrl: 'https://via.placeholder.com/400x200',
+              imageUrl: 'https://picsum.photos/250?image=9',
               title: 'Dart Language Tips',
               subtitle: 'Master Dart for Flutter Development',
               description: 'Explore advanced features of the Dart language and how to use them effectively.',
               content: "this is the content of the dart language tips",
             ),
             Blog(
-              imageUrl: 'https://via.placeholder.com/400x200',
+              imageUrl: 'https://picsum.photos/250?image=9',
               title: 'State Management in Flutter',
               subtitle: 'Understand Provider, Riverpod, and more',
               description: 'Dive deep into the world of state management and pick the right approach for your app.',
               content: "this is the content of the statemanagement in flutter",
             ),
             Blog(
-              imageUrl: 'https://via.placeholder.com/400x200',
+              imageUrl: 'https://picsum.photos/250?image=9',
               title: 'State Management in Flutter',
               subtitle: 'Understand Provider, Riverpod, and more',
               description: 'Dive deep into the world of state management and pick the right approach for your app.',
