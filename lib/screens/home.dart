@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/blog_card.dart';
+import '../widgets/cards_list.dart';
+import '../models/blog.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -36,22 +37,45 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               title: Text("Saved Blogs"),
-            )
+            ),
           ],
         ),
       ),
-      body: Column(
-        children: [
-          BlogCard(
-            imageUrl: 'https://picsum.photos/250?image=9',
-            title: "My First Blog",
-            subtitle: "This is my first blog on this app",
-            description: "This is a blog that i can test the card widget on.",
-            onLikePressed: () { print("Hello, Like"); },
-            onSharePressed: () { print("Hello, Share"); },
-          ),
-        ],
-      )
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: CardList(
+          blogs: [
+            Blog(
+              imageUrl: 'https://via.placeholder.com/400x200',
+              title: 'Flutter Blog UI',
+              subtitle: 'How to create awesome designs',
+              description: 'Learn the steps to create responsive and attractive UIs in Flutter.',
+              content: "This is the content for Flutter blog",
+            ),
+            Blog(
+              imageUrl: 'https://via.placeholder.com/400x200',
+              title: 'Dart Language Tips',
+              subtitle: 'Master Dart for Flutter Development',
+              description: 'Explore advanced features of the Dart language and how to use them effectively.',
+              content: "this is the content of the dart language tips",
+            ),
+            Blog(
+              imageUrl: 'https://via.placeholder.com/400x200',
+              title: 'State Management in Flutter',
+              subtitle: 'Understand Provider, Riverpod, and more',
+              description: 'Dive deep into the world of state management and pick the right approach for your app.',
+              content: "this is the content of the statemanagement in flutter",
+            ),
+            Blog(
+              imageUrl: 'https://via.placeholder.com/400x200',
+              title: 'State Management in Flutter',
+              subtitle: 'Understand Provider, Riverpod, and more',
+              description: 'Dive deep into the world of state management and pick the right approach for your app.',
+              content: "this is the content of the statemanagement in flutter",
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
