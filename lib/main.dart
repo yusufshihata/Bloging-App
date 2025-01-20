@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:blogly/screens/home.dart';
+import 'package:blogly/screens/first_screen.dart';
 
 void main() {
   runApp(const MainApp());

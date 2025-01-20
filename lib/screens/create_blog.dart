@@ -1,3 +1,4 @@
+import 'package:blogly/widgets/submit_button.dart';
 import 'package:flutter/material.dart';
 import '../widgets/textInput.dart';
 import '../widgets/blog_input.dart';
@@ -27,6 +28,8 @@ class CreateBlog extends StatelessWidget {
           InputForm(form: "Enter the subtitle of the blog"),
           SizedBox(height: 10.0),
           BlogInput(),
+          SizedBox(height: 20.0),
+          SubmitButton(form: "Submit your Blog")
         ],
       ),
     );
