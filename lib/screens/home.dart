@@ -1,6 +1,8 @@
+import 'package:blogly/screens/login.dart';
 import 'package:flutter/material.dart';
 import '../widgets/cards_list.dart';
 import '../models/blog.dart';
+import 'package:blogly/screens/signup.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,10 +36,16 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text("Your Blogs"),
+              title: Text("Sign In"),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+              },
             ),
             ListTile(
-              title: Text("Saved Blogs"),
+              title: Text("Sign up"),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (content) => const Signup()));
+              },
             ),
           ],
         ),
@@ -65,7 +73,7 @@ class HomeScreen extends StatelessWidget {
               title: 'State Management in Flutter',
               subtitle: 'Understand Provider, Riverpod, and more',
               description: 'Dive deep into the world of state management and pick the right approach for your app.',
-              content: "this is the content of the statemanagement in flutter",
+              content: "this is the content of the state management in flutter",
             ),
             Blog(
               imageUrl: 'https://picsum.photos/250?image=9',
