@@ -49,6 +49,7 @@ class BlogCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
+                    fontFamily: "Poppins",
                   ),
                 ),
                 SizedBox(height: 8.0),
@@ -57,6 +58,7 @@ class BlogCard extends StatelessWidget {
                   subtitle,
                   style: TextStyle(
                     fontSize: 14.0,
+                    fontFamily: "Poppins",
                     color: Colors.grey[600],
                   ),
                 ),
@@ -66,6 +68,7 @@ class BlogCard extends StatelessWidget {
                   description,
                   style: TextStyle(
                     fontSize: 16.0,
+                    fontFamily: "Poppins",
                     color: Colors.grey[800],
                   ),
                 ),
@@ -78,7 +81,7 @@ class BlogCard extends StatelessWidget {
                     ElevatedButton.icon(
                       onPressed: onLikePressed,
                       icon: Icon(Icons.thumb_up, color: Colors.white),
-                      label: Text('Like', style: TextStyle(color: Colors.white),),
+                      label: Text('Like', style: TextStyle(color: Colors.white, fontFamily: "Poppins"),),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.lightBlueAccent,
                         shape: RoundedRectangleBorder(
@@ -90,7 +93,7 @@ class BlogCard extends StatelessWidget {
                     ElevatedButton.icon(
                       onPressed: onSharePressed,
                       icon: Icon(Icons.share, color: Colors.white,),
-                      label: Text('Share', style: TextStyle(color: Colors.white),),
+                      label: Text('Share', style: TextStyle(color: Colors.white, fontFamily: "Poppins"),),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.lightBlueAccent,
                         shape: RoundedRectangleBorder(
