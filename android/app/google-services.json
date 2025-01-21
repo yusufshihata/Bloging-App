@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "518077031734",
+    "project_id": "blogly-project",
+    "storage_bucket": "blogly-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518077031734:android:656eddfe7715ade1597f97",
+        "android_client_info": {
+          "package_name": "com.example.blogly"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdtiXdhfDEMDQqJMqX8yHPCOqcwqDwreQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
