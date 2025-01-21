@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/textInput.dart';
+import '../widgets/blogInput.dart';
 import '../widgets/submit_button.dart';
 
 class Signup extends StatelessWidget {
@@ -58,7 +58,6 @@ class Signup extends StatelessWidget {
             SizedBox(height: 20.0,),
             InputForm(form: "Password"),
             SizedBox(height: 20.0),
-            SubmitButton(form: "Sign up"),
           ]
       ),
     );

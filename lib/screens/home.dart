@@ -1,12 +1,35 @@
 import 'package:blogly/screens/login.dart';
 import 'package:flutter/material.dart';
-import '../widgets/cards_list.dart';
+import '../widgets/cards_list.dart'; // Make sure this widget can accept the list of blogs
 import '../models/blog.dart';
 import 'package:blogly/screens/signup.dart';
 import './create_blog.dart';
+import '../services/firestore.dart'; // Import FirestoreService
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final FirestoreService firestoreService = FirestoreService();
+
+  late Future<List<Blog>> _blogs; // Declare a Future to hold the list of blogs
+
+  @override
+  void initState() {
+    super.initState();
+    _blogs = firestoreService.getBlogs(); // Fetch blogs when the screen is initialized
+  }
+
+  // Function to reload blogs after a new one is added
+  void _reloadBlogs() {
+    setState(() {
+      _blogs = firestoreService.getBlogs(); // Fetch the updated list of blogs
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +49,14 @@ class HomeScreen extends StatelessWidget {
             color: Colors.lightBlueAccent,
             icon: Icon(Icons.add),
             onPressed: () {
+              // Navigate to create a new blog
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const CreateBlog()),
+                MaterialPageRoute(
+                  builder: (context) => CreateBlog(
+                    reloadBlogs: _reloadBlogs, // Pass the reloadBlogs function
+                  ),
+                ),
               );
             },
           )
@@ -39,8 +67,8 @@ class HomeScreen extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
               decoration: BoxDecoration(color: Colors.lightBlueAccent),
-              accountName: Text("Yusuf Shihata", style: TextStyle(fontFamily: "Poppins"),),
-              accountEmail: Text("yusufshihata2006@gmail.com", style: TextStyle(fontFamily: "Poppins"),),
+              accountName: Text("Yusuf Shihata", style: TextStyle(fontFamily: "Poppins")),
+              accountEmail: Text("yusufshihata2006@gmail.com", style: TextStyle(fontFamily: "Poppins")),
               currentAccountPicture: GestureDetector(
                 child: CircleAvatar(
                   child: Text(
@@ -57,7 +85,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text("Sign In", style: TextStyle(fontFamily: "Poppins"),),
+              title: Text("Sign In", style: TextStyle(fontFamily: "Poppins")),
               onTap: () {
                 Navigator.push(
                   context,
@@ -66,7 +94,7 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text("Sign up", style: TextStyle(fontFamily: "Poppins"),),
+              title: Text("Sign up", style: TextStyle(fontFamily: "Poppins")),
               onTap: () {
                 Navigator.push(
                   context,
@@ -79,39 +107,32 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: CardList(
-              blogs: [
-                Blog(
-                  imageUrl: 'https://picsum.photos/250?image=9',
-                  title: 'Flutter Blog UI',
-                  subtitle: 'How to create awesome designs',
-                  description: 'Learn the steps to create responsive and attractive UIs in Flutter.',
-                  content: "This is the content for Flutter blog",
-                ),
-                Blog(
-                  imageUrl: 'https://picsum.photos/250?image=9',
-                  title: 'Dart Language Tips',
-                  subtitle: 'Master Dart for Flutter Development',
-                  description: 'Explore advanced features of the Dart language and how to use them effectively.',
-                  content: "This is the content of the Dart language tips",
-                ),
-                Blog(
-                  imageUrl: 'https://picsum.photos/250?image=9',
-                  title: 'State Management in Flutter',
-                  subtitle: 'Understand Provider, Riverpod, and more',
-                  description: 'Dive deep into the world of state management and pick the right approach for your app.',
-                  content: "This is the content of state management in Flutter",
-                ),
-                Blog(
-                  imageUrl: 'https://picsum.photos/250?image=9',
-                  title: 'State Management in Flutter',
-                  subtitle: 'Understand Provider, Riverpod, and more',
-                  description: 'Dive deep into the world of state management and pick the right approach for your app.',
-                  content: "This is the content of state management in Flutter",
-                ),
-              ],
-            ),
+        child: FutureBuilder<List<Blog>>(
+          future: _blogs, // The future that fetches the blogs
+          builder: (context, snapshot) {
+            // Check the connection state
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            // Check for errors
+            if (snapshot.hasError) {
+              return Center(child: Text("Error: ${snapshot.error}"));
+            }
+
+            // If data is available
+            if (snapshot.hasData) {
+              List<Blog> blogs = snapshot.data!;
+              return CardList(
+                blogs: blogs, // Pass the blogs to the CardList widget
+              );
+            }
+
+            // In case no data is available
+            return Center(child: Text("No blogs available"));
+          },
         ),
+      ),
     );
   }
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class SubmitButton extends StatelessWidget {
   final String form;
-  const SubmitButton({super.key, required this.form});
+  final VoidCallback onPressed;
+  const SubmitButton({super.key, required this.form, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,7 @@ class SubmitButton extends StatelessWidget {
 
       ),
       child: Text(form),
-      onPressed: () {
-        Navigator.pop(context);
-      },
+      onPressed: onPressed,
     );
   }
 }

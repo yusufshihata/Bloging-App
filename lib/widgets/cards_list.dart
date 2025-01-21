@@ -17,7 +17,6 @@ class CardList extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: BlogCard(
-            imageUrl: blog.imageUrl,
             title: blog.title,
             subtitle: blog.subtitle,
             description: blog.description,

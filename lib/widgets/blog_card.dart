@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class BlogCard extends StatelessWidget {
-  final String imageUrl;
   final String title;
   final String subtitle;
   final String description;
@@ -9,7 +8,6 @@ class BlogCard extends StatelessWidget {
   final VoidCallback onSharePressed;
 
   const BlogCard({
-    required this.imageUrl,
     required this.title,
     required this.subtitle,
     required this.description,
@@ -29,15 +27,7 @@ class BlogCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Blog Image
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
-            child: Image.network(
-              imageUrl,
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
+
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
