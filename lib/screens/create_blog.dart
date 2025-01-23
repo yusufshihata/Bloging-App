@@ -17,13 +17,32 @@ class CreateBlog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Create Blog")),
-      body: Padding(
+      appBar: AppBar(
+        title: const Text("Create Blog"),
+        centerTitle: true,
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Header
+              const Center(
+                child: Text(
+                  "Add a New Blog",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Title TextField
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -32,8 +51,17 @@ class CreateBlog extends StatelessWidget {
                   return null;
                 },
                 onSaved: (value) => title = value,
-                decoration: InputDecoration(hintText: "Blog Title"),
+                decoration: InputDecoration(
+                  labelText: "Blog Title",
+                  prefixIcon: const Icon(Icons.title),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
               ),
+              const SizedBox(height: 16),
+
+              // Subtitle TextField
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -42,8 +70,17 @@ class CreateBlog extends StatelessWidget {
                   return null;
                 },
                 onSaved: (value) => subtitle = value,
-                decoration: InputDecoration(hintText: "Blog Subtitle"),
+                decoration: InputDecoration(
+                  labelText: "Blog Subtitle",
+                  prefixIcon: const Icon(Icons.subtitles),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
               ),
+              const SizedBox(height: 16),
+
+              // Description TextField
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -52,28 +89,71 @@ class CreateBlog extends StatelessWidget {
                   return null;
                 },
                 onSaved: (value) => description = value,
-                decoration: InputDecoration(hintText: "Blog Description"),
+                decoration: InputDecoration(
+                  labelText: "Blog Description",
+                  prefixIcon: const Icon(Icons.description),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
               ),
+              const SizedBox(height: 16),
+
+              // Content TextField
               TextFormField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Please enter content";
+                    return "Please enter the content";
                   }
                   return null;
                 },
                 onSaved: (value) => content = value,
-                decoration: InputDecoration(hintText: "Blog Content"),
+                maxLines: 5, // Make it suitable for longer text
+                decoration: InputDecoration(
+                  labelText: "Blog Content",
+                  prefixIcon: const Icon(Icons.article),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
               ),
+              const SizedBox(height: 20),
+
+              // Submit Button
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    await firestoreService.addBlog(title, subtitle, description, content);
-                    reloadBlogs(); // Reload blogs after adding
-                    Navigator.pop(context); // Close the CreateBlog screen
+                    try {
+                      await firestoreService.addBlog(
+                        title,
+                        subtitle,
+                        description,
+                        content,
+                      );
+                      reloadBlogs(); // Reload blogs after adding
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Blog added successfully!")),
+                      );
+                      Navigator.pop(context); // Close the CreateBlog screen
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Error: $e")),
+                      );
+                    }
                   }
                 },
-                child: Text("Add Blog"),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  backgroundColor: Colors.blueAccent,
+                ),
+                child: const Text(
+                  "Add Blog",
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ],
           ),

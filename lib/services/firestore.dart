@@ -23,7 +23,7 @@ class FirestoreService {
       print("Blog added successfully!");
     } catch (e) {
       print("Failed to add blog: $e");
-      throw e;
+      rethrow;
     }
   }
 
@@ -38,7 +38,7 @@ class FirestoreService {
       return blogs;
     } catch (e) {
       print("Failed to fetch blogs: $e");
-      throw e;
+      rethrow;
     }
   }
 
@@ -53,7 +53,7 @@ class FirestoreService {
       }
     } catch (e) {
       print("Error fetching blog by ID: $e");
-      throw e;
+      rethrow;
     }
   }
 }
