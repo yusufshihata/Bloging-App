@@ -8,7 +8,7 @@ class AuthService {
   Future<void> saveUserData(String uid, String name, String email, String password) async {
     try {
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
-        'name': name,
+        'displayName': name,
         'email': email,
         'password': password,
       });
@@ -16,6 +16,7 @@ class AuthService {
       print("Error saving user data: $e");
     }
   }
+
   // Sign-Up Method
   Future<void> signup({
     required String name,
@@ -91,8 +92,17 @@ class AuthService {
     }
   }
 
-  Future<void> logout() async {
-    await FirebaseAuth.instance.signOut();
-    print("User logged out");
+  Future<void> logout({required BuildContext context}) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Logout Successfully.")),
+      );
+    } on FirebaseAuthException catch(e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("An unexpected error occurred: $e")),
+      );
+    }
   }
 }

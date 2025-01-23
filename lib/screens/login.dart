@@ -117,9 +117,6 @@ class _LoginState extends State<Login> {
                         password: password,
                         context: context,
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Login successful!")),
-                      );
                       Navigator.pop(context); // Navigate back after login
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
