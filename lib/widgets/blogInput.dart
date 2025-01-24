@@ -3,7 +3,17 @@ import '../services/firestore.dart';
 
 class InputForm extends StatefulWidget {
   final String form;
-  const InputForm({super.key, required this.form});
+  final String userId;
+  final String userName;
+  final String userEmail;
+
+  const InputForm({
+    super.key,
+    required this.form,
+    required this.userId,
+    required this.userName,
+    required this.userEmail,
+  });
 
   @override
   State<InputForm> createState() => _InputFormState();
@@ -21,76 +31,122 @@ class _InputFormState extends State<InputForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: Form(
         key: _formKey,
         child: Column(
           children: [
+            // Title Field
             TextFormField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Add String Please";
+                  return "Please add a title.";
                 }
                 return null;
               },
-              onSaved: (String? value) { title = value; },
-              decoration: InputDecoration(
+              onSaved: (value) {
+                title = value;
+              },
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Blog Title",
               ),
             ),
+            const SizedBox(height: 10.0),
+
+            // Subtitle Field
             TextFormField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Add String Please";
+                  return "Please add a subtitle.";
                 }
                 return null;
               },
-                onSaved: (String? value) { subtitle = value; },
-              decoration: InputDecoration(
+              onSaved: (value) {
+                subtitle = value;
+              },
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: "Blog subtitle"
-              )
+                hintText: "Blog Subtitle",
+              ),
             ),
+            const SizedBox(height: 10.0),
+
+            // Description Field
             TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Add String Please";
-                  }
-                  return null;
-                },
-                onSaved: (String? value) { description = value; },
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Blog description"
-                )
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please add a description.";
+                }
+                return null;
+              },
+              onSaved: (value) {
+                description = value;
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Blog Description",
+              ),
             ),
+            const SizedBox(height: 10.0),
+
+            // Content Field
             TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Add String Please";
-                  }
-                  return null;
-                },
-                onSaved: (String? value) { content = value; },
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Blog content"
-                )
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please add content.";
+                }
+                return null;
+              },
+              onSaved: (value) {
+                content = value;
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Blog Content",
+              ),
+              maxLines: 5,
             ),
-            ElevatedButton(onPressed: () {
-              if(_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
+            const SizedBox(height: 20.0),
 
-                firestoreService.addBlog(title, subtitle, description, content);
+            // Submit Button
+            ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Processing Data")),
-                );
-              }
+                  try {
+                    await firestoreService.addBlog(
+                      title: title,
+                      subtitle: subtitle,
+                      description: description,
+                      content: content,
+                      userId: widget.userId,
+                      userName: widget.userName,
+                      userEmail: widget.userEmail,
+                    );
 
-              Navigator.pop(context);
-            }, child: Text("Add Blog"))
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Blog added successfully!"),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+
+                    // Navigate back
+                    Navigator.pop(context);
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Failed to add blog: $e"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                }
+              },
+              child: const Text("Add Blog"),
+            ),
           ],
         ),
       ),

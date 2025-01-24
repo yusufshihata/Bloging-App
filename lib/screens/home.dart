@@ -73,14 +73,23 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.add),
             tooltip: "Add New Blog",
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CreateBlog(
-                    reloadBlogs: _loadBlogs, // Reload blogs when returning
+              if (FirebaseAuth.instance.currentUser != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CreateBlog(
+                      reloadBlogs: _loadBlogs, // Reload blogs when returning
+                    ),
                   ),
-                ),
-              );
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("You must be signed in to create a blog."),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
             },
           ),
         ],
@@ -252,3 +261,4 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 }
+

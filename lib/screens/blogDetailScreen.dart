@@ -108,7 +108,10 @@ class BlogDetailScreen extends StatelessWidget {
                           debugPrint('Liked blog: ${blog.title}');
                         },
                         icon: const Icon(Icons.thumb_up, color: Colors.white),
-                        label: const Text("Like", style: TextStyle(color: Colors.white),),
+                        label: const Text(
+                          "Like",
+                          style: TextStyle(color: Colors.white),
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueAccent,
                           shape: RoundedRectangleBorder(
@@ -123,8 +126,14 @@ class BlogDetailScreen extends StatelessWidget {
                           // Add logic for sharing the blog
                           debugPrint('Shared blog: ${blog.title}');
                         },
-                        icon: const Icon(Icons.share, color: Colors.white,),
-                        label: const Text("Share", style: TextStyle(color: Colors.white),),
+                        icon: const Icon(
+                          Icons.share,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          "Share",
+                          style: TextStyle(color: Colors.white),
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueAccent,
                           shape: RoundedRectangleBorder(

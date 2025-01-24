@@ -6,6 +6,7 @@ class Blog {
   final String subtitle;
   final String description;
   final String content;
+  final String authorName;
   final DateTime timestamp;
 
   Blog({
@@ -14,18 +15,19 @@ class Blog {
     required this.subtitle,
     required this.description,
     required this.content,
+    required this.authorName,
     required this.timestamp,
   });
 
-  // Factory method to handle Firestore document conversion
   factory Blog.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Blog(
       id: doc.id,
-      title: data['title'] ?? 'No Title',
-      subtitle: data['subtitle'] ?? 'No Subtitle',
-      description: data['description'] ?? 'No Description',
-      content: data['content'] ?? 'No Content',
+      title: data['title'] ?? '',
+      subtitle: data['subtitle'] ?? '',
+      description: data['description'] ?? '',
+      content: data['content'] ?? '',
+      authorName: data['authorName'] ?? 'Unknown',
       timestamp: (data['timestamp'] as Timestamp).toDate(),
     );
   }

@@ -1,31 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/blog.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> addBlog(
-      String? title, String? subtitle, String? description, String? content) async {
-    try {
-      print("Adding blog: $title, $subtitle, $description, $content");
-      // Create a blog data map
-      Map<String, dynamic> blogData = {
-        'title': title ?? 'No Title',
-        'subtitle': subtitle ?? 'No Subtitle',
-        'description': description ?? 'No Description',
-        'content': content ?? 'No Content',
-        'timestamp': FieldValue.serverTimestamp(),
-      };
-
-      // Add the blog to Firestore
-      await _firestore.collection('blogs').add(blogData);
-
-      print("Blog added successfully!");
-    } catch (e) {
-      print("Failed to add blog: $e");
-      rethrow;
-    }
+  Future<void> addBlog({
+    required String? title,
+    required String? subtitle,
+    required String? description,
+    required String? content,
+    required String userId,
+    required String userName,
+    required String userEmail,
+  }) async {
+    final blog = {
+      'title': title,
+      'subtitle': subtitle,
+      'description': description,
+      'content': content,
+      'userId': userId,
+      'userName': userName,
+      'userEmail': userEmail,
+      'timestamp': FieldValue.serverTimestamp(),
+    };
+    await FirebaseFirestore.instance.collection('blogs').add(blog);
   }
+
 
   Future<List<Blog>> getBlogs() async {
     try {
